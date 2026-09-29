@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  /* Warm stone page: calm in a dark room, and lets the mats carry the light. */
-  --color-paper: #AAAAAA;
+  /* Mid-grey page: calm in a dark room, and lets the photos carry the light. */
+  --color-paper: #aaaaaa;
   --color-ink: #151515;
-  /* 5.2:1 on paper — passes WCAG AA for small text. */
-  --color-muted: #4f4c47;
+  /* 5.2:1 on paper, 11:1 on mat — passes WCAG AA for small text. */
+  --color-muted: #383633;
   --color-rule: #aca79e;
   /* Off-white mount each photo sits on — the brightest thing on the page. */
   --color-mat: #f6f4ef;

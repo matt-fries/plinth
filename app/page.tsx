@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Caption } from "@/components/Caption";
 import { Container } from "@/components/Container";
 import { FadeImage } from "@/components/FadeImage";
 import { PhotoGrid } from "@/components/PhotoGrid";
@@ -28,8 +27,11 @@ export default function HomePage() {
           </p>
         </section>
 
-        <figure className="mt-4 sm:mt-6">
-          <Link href={`/photos/${hero.slug}`} className="block bg-mat p-4 sm:p-8 lg:p-12">
+        <div className="mt-2 sm:mt-3 lg:mt-4">
+          <Link
+            href={`/photos/${hero.slug}`}
+            className="block bg-mat transition-opacity duration-500 hover:opacity-90"
+          >
             <FadeImage
               src={hero.image.src}
               width={hero.image.width}
@@ -41,15 +43,12 @@ export default function HomePage() {
               className="h-auto w-full"
             />
           </Link>
-          <figcaption className="mt-3">
-            <Caption photo={hero} />
-          </figcaption>
-        </figure>
+        </div>
       </Container>
 
-      <Container className="mt-32 sm:mt-48">
+      <Container className="mt-20 sm:mt-28">
         <section aria-labelledby="selected-work">
-          <div className="mb-10 flex flex-wrap items-end justify-between gap-4 border-t-2 border-ink pt-5 sm:mb-16">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-t-2 border-ink pt-5 sm:mb-8">
             <h2
               id="selected-work"
               className="font-display text-4xl leading-none uppercase sm:text-6xl"

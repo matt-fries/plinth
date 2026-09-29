@@ -50,7 +50,3 @@ export function getNeighbours(photo: Photo) {
     next: list[(i + 1) % list.length],
   };
 }
-
-export function isPanorama(photo: Photo): boolean {
-  return photo.image.width / photo.image.height >= 2.2;
-}

@@ -16,12 +16,14 @@ export async function generateMetadata(props: PageProps<"/photos/[slug]">): Prom
   const { slug } = await props.params;
   const photo = getPhoto(slug);
   if (!photo) return {};
-  const description = `${photo.title} — ${photo.location}, ${photo.year}.`;
+  const { index } = getNeighbours(photo);
+  const title = `${getCollection(photo.collection)!.title} ${String(index + 1).padStart(2, "0")}`;
+  const description = photo.location ? `Photograph — ${photo.location}.` : undefined;
   return {
-    title: photo.title,
+    title,
     description,
     openGraph: {
-      title: photo.title,
+      title,
       description,
       images: [
         {
@@ -48,8 +50,8 @@ export default async function PhotoPage(props: PageProps<"/photos/[slug]">) {
     <Container>
       <PhotoKeys prev={`/photos/${prev.slug}`} next={`/photos/${next.slug}`} back={backHref} />
 
-      <article className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-        <div className="flex items-center justify-center bg-mat p-4 sm:p-8 lg:col-span-8 lg:self-start lg:p-12">
+      <article className="grid gap-8 bg-mat p-3 sm:p-6 lg:grid-cols-12 lg:gap-10 lg:p-10">
+        <div className="flex items-center justify-center lg:col-span-8 lg:self-start">
           <FadeImage
             key={photo.slug}
             src={photo.image.src}
@@ -63,21 +65,19 @@ export default async function PhotoPage(props: PageProps<"/photos/[slug]">) {
           />
         </div>
 
-        <aside className="flex flex-col gap-10 font-mono text-xs lg:col-span-4 xl:col-span-3 xl:col-start-10">
-          <header className="space-y-2">
+        <aside className="flex flex-col gap-8 font-mono text-xs lg:col-span-4 xl:col-span-3 xl:col-start-10">
+          <header className="space-y-3">
+            <h1 className="sr-only">
+              {collection.title}, photograph {index + 1} of {total}
+            </h1>
             <p className="text-muted tabular-nums">
               <Link href={backHref} className="hover:text-ink">
                 {collection.title}
               </Link>{" "}
               · {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
             </p>
-            <h1 className="pt-2 font-display text-2xl leading-[0.95] uppercase">{photo.title}</h1>
-            <p className="text-muted">
-              {photo.location}, {photo.year}
-            </p>
-            {photo.placeholder && (
-              <p className="pt-2 text-muted italic">Placeholder image — caption is illustrative.</p>
-            )}
+            {photo.location && <p className="text-sm">{photo.location}</p>}
+            {photo.placeholder && <p className="text-muted italic">Placeholder image.</p>}
           </header>
 
           <nav aria-label="Photo navigation" className="border-t border-rule pt-6">

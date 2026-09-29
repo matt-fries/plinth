@@ -32,12 +32,12 @@ npm run dev        # http://localhost:3000
 ## Project layout
 
 ```
-data/photos.ts        ← THE content file: collections, photos, captions, hero
+data/photos.ts        ← THE content file: collections, photos, hero
 lib/types.ts          Photo / Collection types
 lib/site.ts           Name, URL, email, Instagram
 lib/photos.ts         Read-only queries over data/photos.ts
 lib/placeholder.ts    picsum helper (delete once all photos are real)
-components/           Header, footer, grid, image, caption
+components/           Header, footer, grid, image
 app/                  Routes:
   page.tsx              /                 Home: M.F mark, hero, Selected Work
   [collection]/         /street, /landscape (one route per collection)
@@ -57,7 +57,7 @@ component to add, remove, or reorder work.
 
 - JPEG, sRGB, **long edge 2400–3000px**, quality ~85. Next.js generates the
   smaller sizes and AVIF/WebP versions itself, so larger files only slow the build.
-- Use kebab-case file names: `rain-on-8th-ave.jpg`.
+- Name files after their slug: `street-01.jpg`.
 - Drop them into `public/photos/`.
 
 ### 2. Import each file and add an entry
@@ -65,20 +65,18 @@ component to add, remove, or reorder work.
 At the top of `data/photos.ts`:
 
 ```ts
-import rainOn8th from "@/public/photos/rain-on-8th-ave.jpg";
+import street01 from "@/public/photos/street-01.jpg";
 ```
 
 Then, inside the `photos` array, replace a placeholder entry or add a new one:
 
 ```ts
 {
-  slug: "rain-on-8th-ave",              // URL: /photos/rain-on-8th-ave — must be unique
-  title: "Rain on 8th Ave",
+  slug: "street-01",                    // URL: /photos/street-01 — must be unique
   alt: "A lone pedestrian with a black umbrella crossing a rain-slick street at dusk",
   collection: "street",                 // must match a slug in `collections`
-  location: "Calgary, AB",
-  year: 2026,
-  image: rainOn8th,                     // ← the import
+  location: "8th Avenue, Calgary",      // optional: shown only on the photo's own page
+  image: street01,                      // ← the import
   featured: true,                       // optional: show in Selected Work on the home page
 },
 ```
@@ -93,8 +91,10 @@ Some notes:
 - **Order**: photos appear in galleries in the same order as the array.
 - **Hero**: set `heroSlug` to the slug of the image you want under the M.F mark.
   A 16:9 or 3:2 horizontal works best.
-- **Alt text**: required. Describe what's in the frame, not the title.
-- **Panoramas**: anything 2.2:1 or wider automatically spans a full grid row.
+- **Alt text**: required, never shown on the page. Describe what's in the frame
+  for people using screen readers. It also helps search engines.
+- **No titles or years**: the site shows photos only. The location (if any)
+  appears on the photo's own page.
 - **Wrong slugs**: a duplicate slug or an unknown `collection` stops the build
   with a clear error.
 

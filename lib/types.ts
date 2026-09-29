@@ -23,14 +23,13 @@ export interface Collection {
 }
 
 export interface Photo {
-  /** Unique, URL-safe. Becomes /photos/<slug>. */
+  /** Unique, URL-safe. Becomes /photos/<slug>, e.g. "street-01". */
   slug: string;
-  title: string;
-  /** Describe what is in the frame for screen-reader users. */
+  /** Describe what is in the frame for screen-reader users. Never shown. */
   alt: string;
   collection: string;
-  location: string;
-  year: number;
+  /** Optional. Only shown on the photo's own page. */
+  location?: string;
   image: PhotoImage;
   /** Shown in "Selected Work" on the home page. */
   featured?: boolean;
