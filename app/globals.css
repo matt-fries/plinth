@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warm stone page: calm in a dark room, and lets the mats carry the light. */
+  --color-paper: #AAAAAA;
+  --color-ink: #151515;
+  /* 5.2:1 on paper — passes WCAG AA for small text. */
+  --color-muted: #4f4c47;
+  --color-rule: #aca79e;
+  /* Off-white mount each photo sits on — the brightest thing on the page. */
+  --color-mat: #f6f4ef;
+
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-fade-in: fade-in 600ms ease-out;
+  @keyframes fade-in {
+    from {
+      opacity: 0.35;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* Archivo at full weight and widest width: the monolithic display face. */
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+  letter-spacing: -0.02em;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    color-scheme: light;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
